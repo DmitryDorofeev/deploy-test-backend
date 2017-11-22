@@ -28,7 +28,7 @@ app.get('/tasks/', (req, res) => {
 
 app.post('/tasks/', (req, res) => {
   console.log('requested', req.body)
-  const task = new Task(req.body);
+  const task = new Task({...req.body, date: new Date()});
   task.save((err, task) => {
     if (err) {
       console.log('cant save', err);
