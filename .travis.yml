@@ -9,7 +9,6 @@ script:
 - eval "$(ssh-agent -s)"
 - ssh-add ~/.ssh/technopark
 - ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
-- npm run build
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 - npm run docker:build
 - npm run docker:push
