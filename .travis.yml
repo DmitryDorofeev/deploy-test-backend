@@ -14,11 +14,13 @@ script:
 - npm run docker:build
 - npm run docker:push
 - scp ./docker-compose.yml root@${SERVER_IP}:~/docker-compose.backend.yml
-- ssh root@$SERVER_IP "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}; docker pull dmitrydorofeev/tech-frontend; docker-compose -f docker-compose.backend.yml up -d"
+- ssh root@$SERVER_IP "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}; docker
+  pull dmitrydorofeev/tech-frontend; docker-compose -f docker-compose.backend.yml
+  up -d"
 branches:
   only:
   - master
 before_install:
-  - mkdir -p $HOME/.ssh
-  - openssl aes-256-cbc -K $encrypted_360901160980_key -iv $encrypted_360901160980_iv
-    -in technopark.enc -out $HOME/.ssh/technopark -d
+- mkdir -p $HOME/.ssh
+- openssl aes-256-cbc -K $encrypted_36beb2488843_key -iv $encrypted_36beb2488843_iv
+  -in technopark.enc -out $HOME/.ssh/technopark -d
