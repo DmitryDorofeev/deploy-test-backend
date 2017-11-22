@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+- '8'
+sudo: required
+services:
+- docker
+script:
+- chmod 600 ~/.ssh/technopark
+- eval "$(ssh-agent -s)"
+- ssh-add ~/.ssh/technopark
+- ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+- npm run build
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+- npm run docker:build
+- npm run docker:push
+- scp ./docker-compose.yml root@${SERVER_IP}:~/docker-compose.backend.yml
+- ssh root@$SERVER_IP "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}; docker pull dmitrydorofeev/tech-frontend; docker-compose up -t docker-compose.backend.yml -d"
+branches:
+  only:
+  - master
+before_install:
+  - mkdir -p $HOME/.ssh
+  - openssl aes-256-cbc -K $encrypted_360901160980_key -iv $encrypted_360901160980_iv
+    -in technopark.enc -out $HOME/.ssh/technopark -d

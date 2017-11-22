@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  backend:
+    image: dmitrydorofeev/tech-backend
+    links:
+      - mongo:mongo
+
+  mongo:
+    image: mongo
+    volumes:
+      - /data/db:/data/db
