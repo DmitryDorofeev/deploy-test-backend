@@ -18,7 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/tasks/', (req, res) => {
-  Task.find().lean().exec((err, tasks) => {
+  Task.find().sort({date: -1}).lean().exec((err, tasks) => {
     res
       .header({'Content-Type': 'application/json'})
       .send(JSON.stringify(tasks))
