@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://mongo/technopark', { useMongoClient: true });
 
-const taskSchema = mongoose.Schema({ name: String, done: Boolean });
+const taskSchema = mongoose.Schema({ name: String, done: Boolean, date: Date });
 const Task = mongoose.model('Task', taskSchema);
 
 var db = mongoose.connection;
@@ -18,7 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/tasks/', (req, res) => {
-  Task.find().sort({date: -1}).lean().exec((err, tasks) => {
+  Task.find().sort({date: -1}).exec((err, tasks) => {
     res
       .header({'Content-Type': 'application/json'})
       .send(JSON.stringify(tasks))
